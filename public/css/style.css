@@ -1,0 +1,52 @@
+html, body {
+    height: 100%;
+  }
+  
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .form-signin {
+    max-width: 330px;
+    padding: 1rem;
+  }
+  
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+  
+  .top{
+   
+    /* Set the width as needed */
+    margin-bottom: -1px; /* Adjust the margin as needed */
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .middle{
+
+    border-radius: 0;
+    margin-bottom: -1px;
+  }
+  .bottom {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  .form-signin img {
+    margin-bottom: 10px; 
+    margin-top: -20px;/* Adjust as needed */
+    border-radius: 50%;
+  }
+  
+  .form-signin h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 20px;
+    
+  }
+  
