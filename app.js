@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const https = require("https"); // Import the 'https' module instead of 'request'
+const https = require("https");
 const app = express();
 
 app.use(express.static("public"));
@@ -33,7 +33,7 @@ app.post("/", (req, res) => {
     const url = "https://us12.api.mailchimp.com/3.0/lists/98dc67adc7";
     const options = {
         method: "POST",
-        auth: "mudigo:564c855c4c45cb79d2d0bc0bd38a48f3-us12"
+        auth: "mudigo:c6c8e97e5b7da9e3cd79b4f5fb63c3a7-us12"
     };
 
     const request = https.request(url, options, function(response) {
@@ -44,9 +44,21 @@ app.post("/", (req, res) => {
         });
 
         response.on('end', function() {
-            console.log(JSON.parse(data));
-            res.send("Subscription successful!"); // Send a response back to the client
+            const mailchimpResponse = JSON.parse(data);
+
+            if (response.statusCode === 200) {
+                console.log(mailchimpResponse);
+                res.send("Subscription successful!"); // Send a response back to the client
+            } else {
+                console.error(mailchimpResponse);
+                res.status(response.statusCode).send("Subscription failed. Please try again."); // Send an error response
+            }
         });
+    });
+
+    request.on('error', function(error) {
+        console.error('Error making Mailchimp API request:', error);
+        res.status(500).send("Internal server error. Please try again later."); // Send an error response
     });
 
     request.write(jsonData);
