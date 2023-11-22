@@ -27,7 +27,7 @@ app.post("/", (req, res) => {
             }
         ]
     };
-    
+
     const jsonData = JSON.stringify(data);
 
     const url = "https://us12.api.mailchimp.com/3.0/lists/98dc67adc7";
@@ -48,23 +48,22 @@ app.post("/", (req, res) => {
 
             if (response.statusCode === 200) {
                 console.log(mailchimpResponse);
-                res.send("Subscription successful!"); // Send a response back to the client
+                res.status(200).json({ message: "Subscription successful!" }); // Send a JSON response back to the client
             } else {
                 console.error(mailchimpResponse);
-                res.status(response.statusCode).send("Subscription failed. Please try again."); // Send an error response
+                res.status(response.statusCode).json({ message: "Subscription failed. Please try again." }); // Send an error response
             }
         });
     });
 
     request.on('error', function(error) {
         console.error('Error making Mailchimp API request:', error);
-        res.status(500).send("Internal server error. Please try again later."); // Send an error response
+        res.status(500).json({ message: "Internal server error. Please try again later." }); // Send an error response
     });
 
     request.write(jsonData);
     request.end();
 });
 
-app.listen(3000, () => {
-    console.log("server is running on port 3000");
-});
+// Export the express app as the handler for serverless functions
+module.exports = app;
